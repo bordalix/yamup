@@ -9,10 +9,8 @@ You can install and use yamup from Linux, Mac.
 
 Yet Another Meteor UP (yamup) does not user docker containers like all the rest MUP forks, it's based on the original MUP, but updated for modern Meteor times.
 
-**Note:** This branch of yamup is Meteor 1.5-ready. It uses Node 4.8.3 and MongoDB 3.2 by default.
 **Note:** I Can confirm this branch works with Meteor 1.5 Node 4.8.3 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
 
-**Note:** This branch of yamup is Meteor 1.6-ready. It uses Node 8.9.1 and MongoDB 3.2 by default.
 **Note:** I Can confirm this branch works with Meteor 1.6 Node 8.9.1 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
 
 > Screencast: [How to deploy a Meteor app with Meteor Up (by Sacha Greif)](https://www.youtube.com/watch?v=WLGdXtZMmiI)
