@@ -9,7 +9,7 @@ You can install and use yamup from Linux, Mac.
 
 Yet Another Meteor UP (yamup) does not user docker containers like all the rest MUP forks, it's based on the original MUP, but updated for modern Meteor times.
 
-**Note:** I Can confirm this branch works with Meteor 1.5 Node 4.8.3 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
+**Note:** I Can confirm this branch works with Meteor 1.5 Node 4.8.4 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
 
 **Note:** I Can confirm this branch works with Meteor 1.6 Node 8.9.1 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
 
@@ -110,8 +110,9 @@ This will create two files in your Meteor Up project directory:
   // WARNING: Node.js is required! Only skip if you already have Node.js installed on server.
   "setupNode": true,
 
-  // WARNING: nodeVersion defaults to 4.4.7 if omitted. Do not use v, just the version number.
-  "nodeVersion": "4.8.3",
+  // WARNING: nodeVersion defaults to 8.9.1 if omitted. Do not use v, just the version number.
+  // For Meteor 1.5.*, use 4.8.4
+  "nodeVersion": "8.9.1",
 
   // Install PhantomJS on the server
   "setupPhantom": true,

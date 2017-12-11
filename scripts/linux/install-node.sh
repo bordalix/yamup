@@ -11,11 +11,11 @@ set -e
 sudo apt-get update
 
 # Install Node.js - either nodeVersion or which works with latest Meteor release
-# As of Meteor 1.5, node version should be a 4.8.3
+# For Meteor 1.5, node version should be a 4.8.4, and for Meteor 1.6, node version should be 8.9.1
 <% if (nodeVersion) { %>
   NODE_VERSION=<%= nodeVersion %>
 <% } else {%>
-  NODE_VERSION=4.8.3
+  NODE_VERSION=8.9.1
 <% } %>
 
 ARCH=$(python -c 'import platform; print platform.architecture()[0]')
