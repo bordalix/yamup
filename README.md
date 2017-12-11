@@ -61,6 +61,12 @@ Yet Another Meteor UP (yamup) does not user docker containers like all the rest 
 
 ### Installation
 
+Npm install
+
+    sudo npm install -g yamup
+
+Git clone
+
     sudo npm remove -g yamup # Only if you already installed yamup before
     git clone https://github.com/bordalix/yamup.git
     cd yamup
