@@ -18,8 +18,8 @@ sudo apt-get update
   NODE_VERSION=8.9.1
 <% } %>
 
-ARCH=$(python -c 'import platform; print platform.architecture()[0]')
-if [[ ${ARCH} == '64bit' ]]; then
+ARCH=$(uname -p)
+if [[ ${ARCH} == 'x86_64' ]]; then
   NODE_ARCH=x64
 else
   NODE_ARCH=x86
