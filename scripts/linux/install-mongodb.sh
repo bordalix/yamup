@@ -16,5 +16,9 @@ sudo apt-get update -y
 sudo apt-get install mongodb-org mongodb-org-server mongodb-org-shell mongodb-org-tools -y
 
 # Restart mongodb
-sudo stop mongod || :
-sudo start mongod
+if [[ `lsb_release -a 2> /dev/null` =~ Release:.*16\. ]]; then
+  sudo service mongod restart
+else
+  sudo stop mongod || :
+  sudo start mongod
+fi
