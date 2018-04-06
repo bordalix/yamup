@@ -58,6 +58,7 @@ wait-for-mongo ${MONGO_URL} 300000
 # restart app
 LSB=`lsb_release -a 2> /dev/null`
 if [[ ${LSB} =~ Release:.*16\. ]]; then
+  chmod +x /opt/<%= appName %>/start.sh
   sudo service <%= appName %> restart
 else
   sudo stop <%= appName %> || :
