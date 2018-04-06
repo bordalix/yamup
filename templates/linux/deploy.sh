@@ -56,8 +56,13 @@ echo "Waiting for MongoDB to initialize. (5 minutes)"
 wait-for-mongo ${MONGO_URL} 300000
 
 # restart app
-sudo stop <%= appName %> || :
-sudo start <%= appName %> || :
+LSB=`lsb_release -a 2> /dev/null`
+if [[ ${LSB} =~ Release:.*16\. ]]; then
+  sudo service <%= appName %> restart
+else
+  sudo stop <%= appName %> || :
+  sudo start <%= appName %> || :
+fi
 
 echo "Waiting for <%= deployCheckWaitTime %> seconds while app is booting up"
 sleep <%= deployCheckWaitTime %>
