@@ -11,7 +11,7 @@ Yet Another Meteor UP (yamup) does not user docker containers like all the rest 
 
 **Note:** I Can confirm this branch works with Meteor 1.5 Node 4.8.4 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
 
-**Note:** I Can confirm this branch works with Meteor 1.6 Node 8.9.1 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
+**Note:** I Can confirm this branch works with Meteor 1.6 Node 8.9.1 and MongoDB 3.2 and an Ubuntu 14/16/18 EC2 instance.
 
 > Screencast: [How to deploy a Meteor app with Meteor Up (by Sacha Greif)](https://www.youtube.com/watch?v=WLGdXtZMmiI)
 
