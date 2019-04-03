@@ -6,7 +6,7 @@
     "yamup": "./bin/yamup"
   },
   "dependencies": {
-    "archiver": "2.1",
+    "archiver": "^2.1.1",
     "async": "^0.9.0",
     "cjson": "0.3.x",
     "colors": "0.6.x",
