@@ -35,6 +35,8 @@ Yet Another Meteor UP (yamup) does not user docker containers like all the rest 
 - [Multiple Deployments](#multiple-deployments)
 - [Server Specific Environment Variables](#server-specific-environment-variables)
 - [SSL Support](#ssl-support)
+    - [Via nginx and let's encrypt](#via-nginx-and-lets-encrypt)
+    - [Via stud](#via-stud)
 - [Updating](#updating)
 - [Troubleshooting](#troubleshooting)
 - [Additional Resources](#additional-resources)
@@ -199,7 +201,7 @@ And you also need to add NOPASSWD to the sudoers file:
     %sudo  ALL=(ALL) ALL
 
     # by this line
-    %sudo ALL=(ALL) NOPASSWD:ALL  
+    %sudo ALL=(ALL) NOPASSWD:ALL
 
 When this process is not working you might encounter the following error:
 
@@ -296,7 +298,133 @@ Now setup both projects and deploy as you need.
 
 ### SSL Support
 
-yamup has the built in SSL support. It uses [stud](https://github.com/bumptech/stud) SSL terminator for that. First you need to get a SSL certificate from some provider. This is how to do that:
+You can enable SSL in two different ways, via [stud](https://github.com/bumptech/stud) (deprecated) or using nginx and let's encrypt (prefered method).
+
+#### Via nginx and let's encrypt
+
+**1 -** Configure a nginx site with a proxy_pass:
+
+file: /etc/nginx/sites-available/example.com
+
+```
+server {
+  listen 80;
+  server_name example.com www.example.com;
+}
+
+server {
+  listen 443 ssl http2;
+  listen [::]:443 ssl http2;
+  charset UTF-8;
+  server_name example.com www.example.com;
+
+  # meteor app
+  location / {
+    proxy_pass http://localhost:3001;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+  }
+}
+```
+
+**2 -** Check your nginx configuration sintax:
+
+`sudo nginx -t`
+
+**3 -** Install certbot:
+
+```
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot python-certbot-nginx
+```
+
+**4 -** Generate the certificates
+
+`sudo certbot --nginx -d example.com -d www.example.com`
+
+It should append this 2 lines to the file /etc/nginx/sites-available/example.com:
+
+```
+ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem; # managed by Certbot
+ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem; # managed by Certbot
+```
+
+**5 -** Reload nginx:
+
+`sudo nginx -s reload`
+
+**6 -** Configure yamup without SSL, and on port 3001.
+
+file: yamup.json
+
+```
+{
+  // Server authentication info
+  "servers": [
+    {
+      "host": "example.com",
+      "username": "aws_username",
+      "pem": "aws_pem_file.pem"
+    }
+  ],
+
+  // Install MongoDB in the server, does not destroy local MongoDB on future setup
+  "setupMongo": true,
+
+  // WARNING: Node.js is required! Only skip if you already have Node.js installed on server.
+  "setupNode": false,
+
+  // WARNING: If nodeVersion omitted will setup 0.10.36 by default. Do not use v, only version number.
+  "nodeVersion": "8.9.1",
+
+  // Install PhantomJS in the server
+  "setupPhantom": false,
+
+  // Show a progress bar during the upload of the bundle to the server.
+  // Might cause an error in some rare cases if set to true, for instance in Shippable CI
+  "enableUploadProgressBar": true,
+
+  // Application name (No spaces)
+  "appName": "example",
+
+  // Location of app (local directory)
+  "app": "./",
+
+  // Configure environment
+  "env": {
+    "PORT": 3001,
+    "ROOT_URL": "https://example.com",
+    "MONGO_URL": "mongodb://127.0.0.1/example"
+  },
+
+  // Meteor Up checks if the app comes online just after the deployment
+  // before mup checks that, it will wait for no. of seconds configured below
+  "deployCheckWaitTime": 15
+}
+```
+
+**7 -** Deploy it with `yamup deploy` or `yamup reconfig` and you should have your site running with SSL via Let's Encrypt.
+
+**8 -** To renew your certificates, just run on the server (you can put it on a cronjob also):
+
+`sudo certbot --nginx renew`
+
+**9 -** If you put the certificate renewal as a cronjob, you don't need to worry any more with SSL and certificates, and you can use yamup to simply build and deploy your Meteor app. Due to this, I don't plan to add support to Let's Encrypt directly.
+
+More info on [this gist](https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8).
+
+#### Via stud
+
+**Note:** deprecated method.
+
+yamup has built in SSL support. It uses [stud](https://github.com/bumptech/stud) SSL terminator for that. First you need to get a SSL certificate from some provider. This is how to do that:
 
 * [First you need to generate a CSR file and the private key](http://www.rackspace.com/knowledge_center/article/generate-a-csr-with-openssl)
 * Then purchase a SSL certificate.
