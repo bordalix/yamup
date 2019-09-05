@@ -1,36 +1,36 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 
-var path = require('path');
-var cjson = require('cjson');
-var Config = require('../lib/config');
-var ActionsRegistry = require('../lib/actions');
-var helpers = require('../lib/helpers');
+const path = require('path');
+const Config = require('../lib/config');
+const ActionsRegistry = require('../lib/actions');
+const helpers = require('../lib/helpers');
 require('colors');
 
 console.log('\nYet Another Meteor UP: Production Quality Meteor Deployments'.bold.blue);
 console.log('------------------------------------------------\n'.bold.blue);
 
-var action = process.argv[2];
-if(action == 'init') {
-  //special setup for init
-  ActionsRegistry.init();
-} else {
-  var cwd = path.resolve('.');
-  //read config and validate it
-  var config = Config.read();
-  runActions(config, cwd);
-}
-
+const action = process.argv[2];
 
 function runActions(config, cwd) {
-  var actionsRegistry = new ActionsRegistry(config, cwd);
-  if(actionsRegistry[action]) {
+  const actionsRegistry = new ActionsRegistry(config, cwd);
+  if (actionsRegistry[action]) {
     actionsRegistry[action]();
   } else {
-    if(typeof action !== "undefined") {
-      var errorMessage = 'No Such Action Exists: ' + action;
+    if (typeof action !== 'undefined') {
+      const errorMessage = `No Such Action Exists: ${action}`;
       console.error(errorMessage.bold.red);
     }
     helpers.printHelp();
   }
+}
+
+if (action === 'init') {
+  // special setup for init
+  ActionsRegistry.init();
+} else {
+  const cwd = path.resolve('.');
+  // read config and validate it
+  const config = Config.read();
+  runActions(config, cwd);
 }
