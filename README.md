@@ -483,6 +483,19 @@ If you need to see the output of `` (to see more precisely where it's failing or
 
 where `<command>` is one of the `yamup` commands such as `setup`, `deploy`, etc.
 
+#### Errors with bcrypt
+
+Don't use bcrypt (`meteor npm uninstall bcrypt`) if after deployment your app crashes and outputs this type of errors ([more info](https://github.com/bordalix/yamup/issues/5#issuecomment-528758181)):
+```
+systemd[1]: Started testapp.
+testapp[15111]: /usr/bin/node: symbol lookup error: /opt/testapp/app/programs/server/npm/node_modules/bcrypt/lib/binding/bcrypt_lib.node: undefined symbol: _ZN4node19GetCurrentEventLoopEPN2v87IsolateE
+systemd[1]: testapp.service: Main process exited, code=exited, status=127/n/a
+systemd[1]: testapp.service: Unit entered failed state.
+systemd[1]: testapp.service: Failed with result 'exit-code'.
+systemd[1]: testapp.service: Service hold-off time over, scheduling restart.
+systemd[1]: Stopped testapp.
+```
+
 ### Additional Resources
 
 * [Using yamup with Nitrous.io](https://github.com/arunoda/meteor-up/wiki/Using-Meteor-Up-with-Nitrous.io)
