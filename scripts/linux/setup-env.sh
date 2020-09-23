@@ -6,7 +6,7 @@ sudo mkdir -p /opt/<%= appName %>/tmp
 
 sudo chown ${USER} /opt/<%= appName %> -R
 
-if [[ `lsb_release -a 2> /dev/null` =~ Release:.*1[6|8]\. ]]; then
+if test -f /etc/os-release; then
   sudo chown ${USER} /etc/
   sudo chown ${USER} /etc/systemd
   sudo chown ${USER} /etc/systemd/system

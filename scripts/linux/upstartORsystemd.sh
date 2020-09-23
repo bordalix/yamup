@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ `lsb_release -a 2> /dev/null` =~ Release:.*1[6|8]\. ]]; then
+if test -f /etc/os-release; then
   echo 'systemd'
 else
   echo 'upstart'

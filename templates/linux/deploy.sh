@@ -56,8 +56,7 @@ echo "Waiting for MongoDB to initialize. (5 minutes)"
 wait-for-mongo ${MONGO_URL} 300000
 
 # restart app
-LSB=`lsb_release -a 2> /dev/null`
-if [[ ${LSB} =~ Release:.*1[6|8]\. ]]; then
+if test -f /etc/os-release; then
   chmod +x /opt/<%= appName %>/start.sh
   sudo service <%= appName %> restart
 else
