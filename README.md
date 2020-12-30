@@ -7,7 +7,7 @@ Yet Another Meteor UP (yamup for short) is a command line tool that allows you t
 
 You can install and use yamup from Linux, Mac.
 
-Yet Another Meteor UP (yamup) does not user docker containers like all the rest MUP forks, it's based on the original MUP, but updated for modern Meteor times.
+Yet Another Meteor UP (yamup) does not use docker containers like all the rest MUP forks, it's based on the original MUP, but updated for modern Meteor times.
 
 **Note:** I Can confirm this branch works with Meteor 1.5 Node 4.8.4 and MongoDB 3.2 and an Ubuntu 14 EC2 instance.
 
