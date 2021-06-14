@@ -13,7 +13,7 @@
     "debug": "^4.1.1",
     "nodemiral": "^1.1.1",
     "rimraf": "2.x.x",
-    "underscore": "1.7.0",
+    "underscore": "1.12.1",
     "uuid": "1.4.x"
   },
   "scripts": {
