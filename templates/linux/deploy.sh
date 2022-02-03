@@ -43,6 +43,9 @@ sudo chown -R ${USER} ${BUNDLE_DIR}
 cd ${BUNDLE_DIR}/programs/server
 
 if [ -f package.json ]; then
+  if [ -f npm-shrinkwrap.json ]; then
+    chmod 644 npm-shrinkwrap.json
+  fi
   npm install
 fi
 
