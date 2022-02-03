@@ -1,12 +1,22 @@
 #!/bin/bash
 
 # utilities
+
+restart_app (){
+  if test -f /etc/os-release; then
+    chmod +x /opt/<%= appName %>/start.sh
+    sudo service <%= appName %> restart
+  else
+    sudo stop <%= appName %> || :
+    sudo start <%= appName %> || :
+  fi
+}
+
 revert_app (){
   if [[ -d old_app ]]; then
     sudo rm -rf app
     sudo mv old_app app
-    sudo stop <%= appName %> || :
-    sudo start <%= appName %> || :
+    restart_app
 
     echo "Latest deployment failed! Reverted back to the previous version." 1>&2
     exit 1
@@ -56,13 +66,7 @@ echo "Waiting for MongoDB to initialize. (5 minutes)"
 wait-for-mongo ${MONGO_URL} 300000
 
 # restart app
-if test -f /etc/os-release; then
-  chmod +x /opt/<%= appName %>/start.sh
-  sudo service <%= appName %> restart
-else
-  sudo stop <%= appName %> || :
-  sudo start <%= appName %> || :
-fi
+restart_app
 
 echo "Waiting for <%= deployCheckWaitTime %> seconds while app is booting up"
 sleep <%= deployCheckWaitTime %>
