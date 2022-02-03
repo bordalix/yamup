@@ -212,8 +212,9 @@ When this process is not working you might encounter the following error:
 This is how yamup will configure the server for you based on the given `appName` or using "meteor" as default appName. This information will help you customize the server for your needs.
 
 * your app lives at `/opt/<appName>/app`
-* yamup uses `upstart` with a config file at `/etc/init/<appName>.conf`
-* you can start and stop the app with upstart: `start <appName>` and `stop <appName>`
+* yamup uses `upstart` or `systemd` depending on your Ubuntu version:
+    * yamup uses `upstart` with a config file at `/etc/init/<appName>.conf` and you can start and stop the app with `sudo start <appName>` and `sudo stop <appName>`
+    * yamup uses `systemd` with a config file at `/etc/systemd/system/<appName>.service` and you can start and stop the app with `sudo service <appName> start` and `sudo service <appName> stop`
 * logs are located at: `/var/log/upstart/<appName>.log`
 * MongoDB installed and bound to the local interface (cannot access from the outside)
 * the database is named `<appName>`
